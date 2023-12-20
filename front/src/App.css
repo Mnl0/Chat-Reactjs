@@ -1,38 +1,72 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+	text-align: center;
 }
 
 .App-link {
-  color: #61dafb;
+	color: #61dafb;
+}
+.main {
+	width: 100%;
+	height: 100vh;
+	margin: 0 auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.leftSide {
+	color: white;
+	border: solid 1px white;
+	height: 820px;
+	width: 300px;
+	float: left;
+}
+
+.listMessage {
+	height: 820px;
+	width: 1618px;
+	color: white;
+	border: solid 1px white;
+	margin-left: 300px;
+	text-align: right;
+}
+.formMessage {
+	clear: both;
+	height: 150px;
+	width: 1920px;
+}
+.formMessage input {
+	width: 1750px;
+	height: 30px;
+	margin: 0;
+	padding: 0;
+	float: left;
+	text-indent: 10px;
+	border: 1px solid #ccc;
+}
+.formMessage button {
+	display: inline-block;
+	width: 166px;
+	height: 64px;
+	border: 0px;
+	border-radius: 1px;
+	padding: 0;
+	margin: 0;
+	border: 1px solid #ccc;
+}
+.formMessage button:hover {
+	cursor: pointer;
+}
+.formMessage input:focus {
+	outline: none;
+}
+.list {
+	padding-right: 25px;
+	display: inline-block;
+}
+
+.list p {
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 4px;
+	background-color: #ccc;
+	color: black;
 }
