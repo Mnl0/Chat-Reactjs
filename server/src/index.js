@@ -5,11 +5,13 @@ import { Server } from 'socket.io'
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import router from '../route/route.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const PORT = 3000 ?? process.env.PORT;
-const DB = 'ChatBD' ?? process.env.DB;
-const USER = 'manu' ?? process.env.USER;
-const PASS = '71UFkz7usEtnXQhp' ?? process.env.PASS;
+const PORT = process.env.PORT ?? 3000;
+const DB = process.env.DB;
+const USER = process.env.USER;
+const PASS = process.env.PASS;
 
 const URI = `mongodb+srv://${USER}:${PASS}@cluster0.ku5gd.mongodb.net/${DB}?retryWrites=true&w=majority`
 mongoose.Promise = global.Promise;
