@@ -56,7 +56,7 @@ function App() {
     //     from: nickname
     //   })
     // })
-    //usar axios para evitar demaciados fetch?
+    //usar axios para evitar demaciados fetch??
 
   }
 
