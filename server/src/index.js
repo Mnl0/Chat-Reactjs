@@ -32,6 +32,17 @@ app.use((req, res, next) => {
 })
 app.use('/api', router)
 
+io.on('connection', (socket) => {
+	console.log('User connected', socket.id);
+
+	socket.on('message', (message, nickname) => {
+		socket.broadcast.emit({
+			body: message,
+			from: nickname
+		})
+	})
+})
+
 mongoose.connect(URI) ? console.log('Connected to MongoDB') : console.log('Error connecting to MongoDB');
 
 server.listen(PORT, () => {
