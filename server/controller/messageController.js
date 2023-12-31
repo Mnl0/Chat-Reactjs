@@ -13,7 +13,10 @@ const messageController = {
 	getMessages: async (req, res) => {
 		const messages = await MessageModel.find()
 		console.log(messages)
-		return res.status(200).send(messages)
+		return res.status(200).send({
+			status: 'success',
+			messages
+		})
 	}
 }
 export default messageController

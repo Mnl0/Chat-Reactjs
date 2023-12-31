@@ -4,11 +4,12 @@ import { createServer } from 'node:http';
 import { Server } from 'socket.io'
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import router from '../route/route.js';
+// import router from '../route/route.js';
+import router from '../route/userRoute.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 3001;
 const DB = process.env.DB;
 const USER = process.env.USER;
 const PASS = process.env.PASS;
@@ -29,10 +30,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', 'Content-Type');
-	res.header('Access-Control-Allow-Methods', 'GET', 'POST', 'PUT', 'DELETE');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
 	next();
-})
-app.use('/api', router)
+});
+
+// app.use('/api', router)
+app.use("/api/auth", router);
 
 io.on('connection', (socket) => {
 	console.log('User connected', socket.id);
