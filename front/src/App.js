@@ -1,6 +1,11 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import io from 'socket.io-client';
 import { useEffect, useState } from 'react';
+import Register from './pages/Register';
+import Chat from './pages/Chat';
+import Login from './pages/Login';
+import SetAvatar from './pages/SetAvatar';
 
 const socket = io('http://localhost:3000');
 const url = 'http://localhost:3000/api/';
@@ -26,8 +31,7 @@ function App() {
 
   if (!firtTime) {
     fetch(url + 'messages')
-      .then(res => res.json())
-      .then(data => setStoredMessages(data.messages))
+      .then(res => setStoredMessages(res.data.messages))
     setFirstTime(true);
   }
 
@@ -48,7 +52,7 @@ function App() {
     setMessage('');
 
 
-    //  fetch(url + 'save', {
+    // fetch(url + 'save', {
     //   method: 'POST',
     //   headers: { 'Content-Type': 'application/json' },
     //   body: JSON.stringify({
@@ -61,7 +65,20 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <BrowserRouter>
+      <Routes>
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/setAvatar' element={<SetAvatar />} />
+        <Route path='/' element={<Chat />} />
+      </Routes>
+    </BrowserRouter>
+
+  )
+}
+
+export default App;
+{/* <div className="App">
       <div className="main">
 
         <div className="leftSide">
@@ -69,16 +86,16 @@ function App() {
         </div>
 
         <div className="listMessage">
-          <div className="list">
-            {messages.map((message, index) => {
-              return (
-                <div key={index}>
-                  <p>{message.from}</p>
-                  <p>{message.body}</p>
-                </div>
-              )
-            })}
-          </div>
+
+          {messages.map((message, index) => (
+            console.log(message.from),
+            <div key={index} className={`${message.from === "yo" ? 'mensajeDerecha' : 'mensajeIzquierda'}`}>
+              <div className='elMensaje'>
+                <p className='mensaje'>{message.from}: {message.body}</p>
+              </div>
+            </div>
+          ))}
+
         </div>
 
         <div className="formMessage">
@@ -103,8 +120,4 @@ function App() {
         </div>
 
       </div>
-    </div>
-  );
-}
-
-export default App;
+    </div> */}

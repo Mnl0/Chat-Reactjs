@@ -1,4 +1,4 @@
-.App {
+/* .App {
 	text-align: center;
 }
 
@@ -22,11 +22,27 @@
 .listMessage {
 	height: 820px;
 	width: 1618px;
-	color: white;
 	border: solid 1px white;
 	margin-left: 300px;
-	text-align: right;
 }
+.mensajeDerecha {
+	display: flex;
+	justify-content: end;
+}
+.mensajeIzquierda {
+	display: flex;
+	justify-content: start;
+}
+.elMensaje {
+	width: fit-content;
+	padding: 5px;
+}
+.mensaje {
+	background-color: #ccc;
+	padding: 2px;
+	border-radius: 3px;
+}
+
 .formMessage {
 	clear: both;
 	height: 150px;
@@ -56,17 +72,4 @@
 }
 .formMessage input:focus {
 	outline: none;
-}
-.list {
-	padding-right: 25px;
-	display: inline-block;
-}
-
-.list p {
-	margin: 10px 0;
-	border: 1px solid #ccc;
-	padding: 10px;
-	border-radius: 4px;
-	background-color: #ccc;
-	color: black;
-}
+} */
