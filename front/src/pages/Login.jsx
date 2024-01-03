@@ -18,25 +18,26 @@ function Login() {
 		event.preventDefault();
 		if (handleValidation()) {
 			const { username, password } = value;
-			fetch(loginRoute, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					username: username,
-					password: password
+			fetchData()
+			async function fetchData() {
+				const response = await fetch(loginRoute, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						username: username,
+						password: password
+					})
 				})
-			})
-				.then(res => res.json())
-				.then(data => {
-					// console.log(data);
-					if (data.status === false) {
-						alert(data.message);
-					}
-					if (data.status === true) {
-						localStorage.setItem('chat-app-user', JSON.stringify(data.data));
-						window.location.href = '/';
-					}
-				})
+				const data = await response.json();
+				if (data.status === false) {
+					alert(data.message);
+					return;
+				}
+				if (data.status === true) {
+					localStorage.setItem('chat-app-user', JSON.stringify(data.data));
+					window.location.href = '/';
+				}
+			}
 		}
 	}
 	const handleChange = (event) => {
