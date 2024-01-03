@@ -15,7 +15,7 @@ function SetAvatar() {
 	useEffect(() => {
 		fetchStorage();
 		async function fetchStorage() {
-			if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY || 'chat-app-user')) {
+			if (!localStorage.getItem('chat-app-user')) {
 				window.location.href = '/login';
 			}
 		}
@@ -28,26 +28,27 @@ function SetAvatar() {
 			return;
 		}
 		const user = await JSON.parse(
-			localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY || 'chat-app-user')
+			localStorage.getItem('chat-app-user')
 		);
-
-		const fetchData = await fetch(`${setAvatarRoute}/${user._id}`, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				image: avatar[selectedAvatar]
+		fetchData()
+		async function fetchData() {
+			const response = await fetch(`${setAvatarRoute}/${user._id}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					image: avatar[selectedAvatar]
+				})
 			})
-		})
-		// console.log(fetchData);
-		if (fetchData.status === 200) {
-			user.isAvatarImageSet = true;
-			user.avatarImage = fetchData.image;
-			localStorage.setItem(process.env.REACT_APP_LOCALHOST_KEY || 'chat-app-user', JSON.stringify(user));
-			window.location.href = '/';
-		}
-		else {
-			alert('Error al seleccionar el avatar, intente nuevamente');
-			return;
+			const data = await response.json();
+			if (data.status === true) {
+				user.isAvatarImageSet = true;
+				user.avatarImage = data.image;
+				localStorage.setItem('chat-app-user', JSON.stringify(user));
+				window.location.href = '/';
+			} else {
+				alert('Error al seleccionar el avatar, intente nuevamente');
+				return;
+			}
 		}
 	}
 	useEffect(() => {
