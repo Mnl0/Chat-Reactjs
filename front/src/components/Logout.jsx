@@ -2,15 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 function Logout() {
-	const handleClick = async () => {
-		localStorage.clear()
-		window.location.href = '/login';
-	}
-	return (
-		<Button onClick={handleClick}>
-			<h6>Salir</h6>
-		</Button>
-	)
+  const handleClick = async () => {
+    localStorage.clear()
+    window.location.href = '/login';
+  }
+  return (
+    //agregar un icono de logout/salir
+    <Button onClick={handleClick}>
+      <h6>Salir</h6>
+    </Button>
+  )
 }
 const Button = styled.button`
   display: flex;
@@ -18,7 +19,7 @@ const Button = styled.button`
   align-items: center;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  background-color: #9a86f3;
+  background-color: #00BCD4;
   border: none;
   cursor: pointer;
   svg {

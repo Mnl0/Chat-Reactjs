@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { getAllUsersRoute } from "../utils/APIRouter";
 import Contacts from "../components/Contacts";
+import Welcome from "../components/Welcome";
+import ChatContainer from "../components/ChatContainer";
 function Chat() {
+
 	const [contacts, setContacts] = useState([]);
 	const [currentUser, setCurrentUser] = useState(undefined);
 	const [currentChat, setCurrentChat] = useState(undefined);
-	let id = undefined
+	const [isLoaded, setIsLoaded] = useState(false);
+
 	useEffect(() => {
 		fetchData()
 		async function fetchData() {
@@ -16,19 +20,26 @@ function Chat() {
 			}
 			const user = await JSON.parse(localStorage.getItem('chat-app-user'))
 			setCurrentUser(user)
+			setIsLoaded(true)
+		}
+		return () => {
 		}
 	}, [])
+
 	useEffect(() => {
-		let id = undefined
 		if (currentUser) {
 			if (currentUser.isAvatarImageSet === false) {
 				window.location.href = '/setavatar';
 			}
-			id = currentUser._id
 		}
-		const url = `${getAllUsersRoute}/${id}`//corregir porque no se esta trayendo el id correctamente
-		fetchApi()
+
+		//corregir esto primero carga toda la pagina despues hace la peticion
+		isLoaded &&
+			setTimeout(() => {
+				fetchApi()
+			}, 1000);
 		async function fetchApi() {
+			const url = `${getAllUsersRoute}/${currentUser._id}`
 			const response = await fetch(url, {
 				method: 'GET',
 				headers: { 'Content-Type': 'application/json' },
@@ -37,9 +48,11 @@ function Chat() {
 			setContacts(data)
 		}
 	}, [currentUser])
+
 	const handleChatChange = (chat) => {
 		setCurrentChat(chat)
 	}
+
 	return (
 		<Container>
 			<div className="container">
@@ -52,6 +65,9 @@ function Chat() {
 						/>
 						: <h6 className="sin-contanct">No hay contactos</h6>
 				}
+				{isLoaded && currentChat === undefined ?
+					<Welcome user={currentUser} /> :
+					<ChatContainer user={currentUser} currentChat={currentChat} />}
 			</div>
 		</Container>
 	);
@@ -65,13 +81,14 @@ const Container = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  background-color: #00796B;
   .container {
     height: 85vh;
     width: 85vw;
     background-color: #00000076;
     display: grid;
     grid-template-columns: 25% 75%;
+	border-radius: 0.3rem;
     @media screen and (min-width: 720px) and (max-width: 1080px) {
       grid-template-columns: 35% 65%;
     }

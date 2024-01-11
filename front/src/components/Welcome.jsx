@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 
 function Welcome({ user }) {
-	return (
-		<Container>
-			<h1>Bienvenido , <span>{user.username}</span></h1>
-			<h3>Porfavor seleccione un chat para comenzar a chatear</h3>
-		</Container>
-	)
+  return (
+    <Container>
+      <h1>Bienvenido , <span>{user.username}</span></h1>
+      <h3>Porfavor seleccione un chat para comenzar a chatear</h3>
+    </Container>
+  )
 }
 
 const Container = styled.div`
@@ -21,7 +21,7 @@ const Container = styled.div`
     height: 20rem;
   }
   span {
-    color: #4e0eff;
+    color: #00BCD4;
   }
 `;
 

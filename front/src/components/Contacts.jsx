@@ -2,72 +2,75 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 function Contacts({ contacts, currentUser, changeChat }) {
-	const [currentUserName, setCurrentUserName] = useState(undefined);
-	const [currentUserImage, setCurrentUserImage] = useState(undefined);
-	const [currentSelected, setCurrentSelected] = useState(undefined);
-	useEffect(() => {
-		if (currentUser) {
-			setCurrentUserImage(currentUser.avatarImage)
-			setCurrentUserName(currentUser.username)
-		}
-	}, [currentUser])
-	const changeCurrentChat = (index, contacts) => {
-		setCurrentSelected(index)
-		changeChat(contacts[index])
+  const [currentUserName, setCurrentUserName] = useState(undefined);
+  const [currentUserImage, setCurrentUserImage] = useState(undefined);
+  const [currentSelected, setCurrentSelected] = useState(undefined);
+  useEffect(() => {
+    if (currentUser) {
+      setCurrentUserImage(currentUser.avatarImage)
+      setCurrentUserName(currentUser.username)
+    }
+  }, [currentUser])
+  const changeCurrentChat = (index, contact) => {
+    setCurrentSelected(index)
+    changeChat(contact)
 
-	}
-	return (
-		<>
-			{
-				currentUserImage && currentUserName && (
-					<Container>
-						<div className="brand">
-							<h3>Chat App</h3>
-						</div>
-						<div className="contacts">
-							{
-								contacts.map((contact, index) => {
-									return (
-										<div className={`contact ${currentSelected === index ? "selected" : ""}`}
-											key={index}
-											onClick={() => changeCurrentChat(index, contact)}
-										>
-											<div className="avatar">
-												<img src={contact.avatarImage.split('?')[0]} alt="avatar" />
-											</div>
-											<div className="username">
-												<h3>{contact.username}</h3>
-											</div>
-										</div>
-									)
-								})
+  }
+  return (
+    <>
+      {
+        currentUserImage && currentUserName && (
+          <Container>
+            <div className="brand">
+              <h3>Chat App</h3>
+            </div>
+            <div className="contacts">
+              {
+                contacts.map((contact, index) => {
+                  return (
+                    <div className={`contact ${currentSelected === index ? "selected" : ""}`}
+                      key={index}
+                      onClick={() => changeCurrentChat(index, contact)}
+                    >
+                      <div className="avatar">
+                        <img src={contact.avatarImage.split('?')[0]} alt="avatar" />
+                      </div>
+                      <div className="username">
+                        <h3>{contact.username}</h3>
+                      </div>
+                    </div>
+                  )
+                })
 
-							}
-						</div>
-						<div className="current-user">
-							<div className="avatar">
-								<img src={currentUserImage.split('?')[0]} alt="avatar" />
-							</div>
-							<div className="username">
-								<h1>{currentUserName}</h1>
-							</div>
-						</div>
-					</Container>
-				)
-			}
-		</>
-	)
+              }
+            </div>
+            <div className="current-user">
+              <div className="avatar">
+                <img src={currentUserImage.split('?')[0]} alt="avatar" />
+              </div>
+              <div className="username">
+                <h1>{currentUserName}</h1>
+              </div>
+            </div>
+          </Container>
+        )
+      }
+    </>
+  )
 }
 const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 75% 15%;
   overflow: hidden;
-  background-color: #080420;
+  background-color: #212121;
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
   .brand {
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
+    border-top-left-radius: 0.3rem;
     img {
       height: 2rem;
     }
@@ -82,6 +85,8 @@ const Container = styled.div`
     align-items: center;
     overflow: auto;
     gap: 0.8rem;
+    border-bottom-left-radius: 0.3rem;
+    border-top-left-radius: 0.3rem;
     &::-webkit-scrollbar {
       width: 0.2rem;
       &-thumb {
@@ -91,7 +96,7 @@ const Container = styled.div`
       }
     }
     .contact {
-      background-color: #ffffff34;
+      background-color: #B2DFDB;
       min-height: 5rem;
       cursor: pointer;
       width: 90%;
@@ -113,16 +118,17 @@ const Container = styled.div`
       }
     }
     .selected {
-      background-color: #9a86f3;
+      background-color: #009688;
     }
   }
 
   .current-user {
-    background-color: #0d0d30;
+    background-color: #00BCD4;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    border-bottom-left-radius: 0.3rem;
     .avatar {
       img {
         height: 4rem;
