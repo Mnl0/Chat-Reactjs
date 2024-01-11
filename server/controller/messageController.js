@@ -1,22 +1,39 @@
 import MessageModel from "../model/messageModel.js";
 
 const messageController = {
-	save: async (req, res) => {
-		const { message, from } = req.body
-		const newMessage = new MessageModel()
-		newMessage.message = message
-		newMessage.from = from
-		console.log(newMessage)
-		const saveMessage = await newMessage.save()
-		return res.status(200).send(saveMessage)
+	save: async (req, res, next) => {
+		try {
+			const { message, from, to } = req.body
+			const newMessage = new MessageModel()
+			newMessage.message = { text: message }
+			newMessage.from = from
+			newMessage.to = [from, to]
+			console.log(newMessage)
+			const saveMessage = await newMessage.save()
+			return res.status(200).send(saveMessage)
+		} catch (err) {
+			console.log(err)
+		}
 	},
 	getMessages: async (req, res) => {
-		const messages = await MessageModel.find()
-		console.log(messages)
-		return res.status(200).send({
-			status: 'success',
-			messages
-		})
+		try {
+			const { from, to } = req.query;
+			const messages = await MessageModel.find({
+				users: {
+					$all: [from, to],
+				}
+			})
+			const messageFilter = messages.map(msg => {
+				return {
+					fromSelf: msg.from === from,
+					message: msg.message.text,
+				}
+			})
+			console.log(messageFilter)
+			return res.json(messageFilter)
+		} catch (err) {
+			console.log(err)
+		}
 	}
 }
 export default messageController

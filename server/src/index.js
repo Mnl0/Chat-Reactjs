@@ -4,8 +4,8 @@ import { createServer } from 'node:http';
 import { Server } from 'socket.io'
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-// import router from '../route/route.js';
 import router from '../route/userRoute.js';
+import msgRoute from '../route/messageRoute.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -34,8 +34,8 @@ app.use((req, res, next) => {
 	next();
 });
 
-// app.use('/api', router)
 app.use("/api/auth", router);
+app.use('/api/msg', msgRoute);
 
 io.on('connection', (socket) => {
 	console.log('User connected', socket.id);
