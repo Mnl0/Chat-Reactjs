@@ -2,29 +2,28 @@ import React from "react";
 import styled from "styled-components";
 
 function ChatInput({ handleSendMsg }) {
-	const [msg, setMsg] = React.useState("");
+  const [msg, setMsg] = React.useState("");
 
-	const sendMessage = (event) => {
-		event.preventDefault();
-		if (msg.length > 0) {
-			console.log('entro al if este es el mensaje chatinput', msg);
-			handleSendMsg(msg);
-			setMsg("");
-		}
-	}
-	return (
-		<Container>
-			<form className="input-container" onSubmit={(e) => sendMessage(e)}>
-				<input
-					type="text"
-					placeholder="Escribe un mensaje..."
-					value={msg}
-					onChange={(event) => setMsg(event.target.value)}
-				/>
-				<button className="submit" type="submit">Enviar</button>
-			</form>
-		</Container>
-	);
+  const sendMessage = (event) => {
+    event.preventDefault();
+    if (msg.length > 0) {
+      handleSendMsg(msg);
+      setMsg("");
+    }
+  }
+  return (
+    <Container>
+      <form className="input-container" onSubmit={(e) => sendMessage(e)}>
+        <input
+          type="text"
+          placeholder="Escribe un mensaje..."
+          value={msg}
+          onChange={(event) => setMsg(event.target.value)}
+        />
+        <button className="submit" type="submit">Enviar</button>
+      </form>
+    </Container>
+  );
 }
 
 const Container = styled.div`

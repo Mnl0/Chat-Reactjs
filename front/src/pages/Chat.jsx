@@ -22,8 +22,6 @@ function Chat() {
 			setCurrentUser(user)
 			setIsLoaded(true)
 		}
-		return () => {
-		}
 	}, [])
 
 	useEffect(() => {
@@ -47,7 +45,7 @@ function Chat() {
 			const data = await response.json()
 			setContacts(data)
 		}
-	}, [currentUser])
+	}, [currentUser, isLoaded])
 
 	const handleChatChange = (chat) => {
 		setCurrentChat(chat)
@@ -56,15 +54,10 @@ function Chat() {
 	return (
 		<Container>
 			<div className="container">
-				{
-					contacts.length > 0 ?
-						<Contacts
-							contacts={contacts}
-							currentUser={currentUser}
-							changeChat={handleChatChange}
-						/>
-						: <h6 className="sin-contanct">No hay contactos</h6>
-				}
+				<Contacts
+					contacts={contacts}
+					changeChat={handleChatChange}
+				/>
 				{isLoaded && currentChat === undefined ?
 					<Welcome user={currentUser} /> :
 					<ChatContainer user={currentUser} currentChat={currentChat} />}

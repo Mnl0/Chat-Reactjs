@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-function Contacts({ contacts, currentUser, changeChat }) {
+function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
   useEffect(() => {
-    if (currentUser) {
-      setCurrentUserImage(currentUser.avatarImage)
-      setCurrentUserName(currentUser.username)
-    }
-  }, [currentUser])
+    const data = JSON.parse(localStorage.getItem('chat-app-user'))
+    setCurrentUserImage(data.avatarImage)
+    setCurrentUserName(data.username)
+  }, [])
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index)
     changeChat(contact)

@@ -2,13 +2,39 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Logout from "./Logout";
 import ChatInput from "./ChatInput";
-import { saveMessageRoute } from "../utils/APIRouter";
+import { saveMessageRoute, getMessagesRoute } from "../utils/APIRouter";
 
 
 function ChatContainer({ currentChat, user }) {
-  console.log(currentChat)
+  const [chatMessages, setChatMessages] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  const load = () => {
+    if (currentChat && user) {
+      setIsLoaded(true)
+      return true
+    }
+    return false
+  }
+
+  useEffect(() => {
+    async function fetchApi() {
+      const response = await fetch(getMessagesRoute, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: user._id,
+          to: currentChat._id,
+        })
+      })
+      const data = await response.json()
+      setChatMessages(data)
+    }
+    load() &&
+      fetchApi()
+  }, [currentChat])
+
   const handleSendMsg = async (msg) => {
-    console.log('console log del chatcontainer', msg)
     await fetch(saveMessageRoute, {
       method: 'POST',
       headers: {
@@ -36,7 +62,23 @@ function ChatContainer({ currentChat, user }) {
           </div>
           <Logout />
         </div>
-        <div className="chat-messages"></div>
+        <div className="chat-messages">
+          {
+            chatMessages.map((message) => {
+              return (
+                <div>
+                  <div className={`message ${message.fromSelf} ? "sended":"recieved"`}>
+                    <div className="content">
+                      <p>
+                        {message.message}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })
+          }
+        </div>
         <ChatInput handleSendMsg={handleSendMsg} />
       </Container>
     }
