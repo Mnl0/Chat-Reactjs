@@ -71,7 +71,6 @@ const user = {
 				isAvatarImageSet: true,
 				avatarImage,
 			})
-			//console.log(userData);
 			return res.json({ image: userData.avatarImage, status: true })
 		} catch (error) {
 			next(error)
@@ -85,7 +84,6 @@ const user = {
 				"avatarImage",
 				"_id",
 			]);
-			console.log(users);
 			// return res.json({ message: 'test response', users });
 			return res.json(users);
 		} catch (error) {

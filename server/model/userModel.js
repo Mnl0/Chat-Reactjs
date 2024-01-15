@@ -6,8 +6,6 @@ const UserSchema = new Schema({
 	username: {
 		type: String,
 		required: true,
-		// min: 3,
-		// max: 20,
 		unique: true,
 	},
 	email: {
@@ -19,7 +17,6 @@ const UserSchema = new Schema({
 	password: {
 		type: String,
 		required: true,
-		// min: 8,
 	},
 	isAvatarImageSet: {
 		type: Boolean,

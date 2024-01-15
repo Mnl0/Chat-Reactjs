@@ -7,8 +7,7 @@ const messageController = {
 			const newMessage = new MessageModel()
 			newMessage.message = { text: message }
 			newMessage.from = from
-			newMessage.to = [from, to]
-			console.log(newMessage)
+			newMessage.users = [from, to]
 			const saveMessage = await newMessage.save()
 			return res.status(200).send(saveMessage)
 		} catch (err) {
@@ -17,7 +16,7 @@ const messageController = {
 	},
 	getMessages: async (req, res) => {
 		try {
-			const { from, to } = req.query;
+			const { from, to } = req.body;
 			const messages = await MessageModel.find({
 				users: {
 					$all: [from, to],
@@ -25,7 +24,7 @@ const messageController = {
 			})
 			const messageFilter = messages.map(msg => {
 				return {
-					fromSelf: msg.from === from,
+					fromSelf: msg.from.toString() === from,
 					message: msg.message.text,
 				}
 			})
